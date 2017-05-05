@@ -1,0 +1,64 @@
+# NAME
+
+Beam::Service - Role for services to access Beam::Wire features
+
+# VERSION
+
+version 0.001
+
+# STATUS
+
+<a href="https://travis-ci.org/preaction/Beam-Service"><img src="https://travis-ci.org/preaction/Beam-Service.svg?branch=master"></a><a href="https://coveralls.io/r/preaction/Beam-Service"><img src="https://coveralls.io/repos/preaction/Beam-Service/badge.png" alt="Coverage Status" /></a>
+
+# SYNOPSIS
+
+    package My::Object;
+    use Role::Tiny::With; # or Moo, or Moose
+    with 'Beam::Service';
+
+    package main;
+    use Beam::Wire;
+    my $wire = Beam::Wire->new(
+        config => {
+            my_object => {
+                '$class' => 'My::Object',
+            },
+        },
+    );
+
+    print $wire->get( 'my_object' )->name; # my_object
+
+# DESCRIPTION
+
+This role adds extra functionality to an object that is going to be used
+as a service in a [Beam::Wire](https://metacpan.org/pod/Beam::Wire) container. While any object can be
+configured with Beam::Wire, consuming the Beam::Service role allows an
+object to know its own name and to access the container it was
+configured in to fetch other objects that it needs.
+
+# ATTRIBUTES
+
+## name
+
+The name of the service. This is the name used in the [Beam::Wire](https://metacpan.org/pod/Beam::Wire)
+configuration file for this service.
+
+## container
+
+The [Beam::Wire](https://metacpan.org/pod/Beam::Wire) container object that contained this service. Using
+this container we can get other services as-needed.
+
+# SEE ALSO
+
+[Beam::Wire](https://metacpan.org/pod/Beam::Wire)
+
+# AUTHOR
+
+Doug Bell <preaction@cpan.org>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2017 by Doug Bell.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
